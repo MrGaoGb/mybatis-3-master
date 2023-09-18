@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apache.ibatis.debug.mapper.UserMappers">
+
+
+  <select id="selectUserById" resultType="org.apache.ibatis.debug.entity.UserInfo">
+    SELECT
+      u.id
+      u.name,
+      u.age
+    from user_info AS u
+    LEFT JOIN account_info AS acc
+    ON u.id = acc.uid
+    where id = #{id}
+  </select>
+
+  <select id="selectAll" resultType="org.apache.ibatis.debug.entity.UserInfo">
+    SELECT *
+    from user_info
+  </select>
+
+  <update id="updateUserAgeById">
+    UPDATE user_info SET age = #{age} WHERE id = #{id}
+  </update>
+
+  <select id="selectUsersByUnionAccountInfo" resultType="org.apache.ibatis.debug.entity.UserAccountInfo">
+    SELECT
+      u.id,
+      u.name,
+      u.age,
+      acc.wallet_amount
+    from user_info AS u
+    LEFT JOIN account_info AS acc
+    ON u.id = acc.uid
+  </select>
+
+</mapper>

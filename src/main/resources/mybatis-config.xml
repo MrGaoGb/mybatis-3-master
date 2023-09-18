@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  <settings>
+    <setting name="logImpl" value="STDOUT_LOGGING"/>
+    <!--
+    SESSION:默认一级缓存
+    STATEMENT:以当前执行SQL的语句生效
+    -->
+    <!--<setting name="localCacheScope" value="SESSION"/>-->
+    <setting name="localCacheScope" value="STATEMENT"/>
+    <!--关闭二级缓存-->
+    <!--<setting name="cacheEnabled" value="FALSE"/>-->
+    <setting name="cacheEnabled" value="true"/>
+
+    <!--驼峰命名开关-->
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+
+  <!--日志插件 可用于配置SQL拦截-->
+  <plugins>
+    <plugin interceptor="org.apache.ibatis.debug.interceptor.MyInterceptor"/>
+    <plugin interceptor="org.apache.ibatis.debug.interceptor.MyInterceptorExecutor"/>
+    <plugin interceptor="org.apache.ibatis.debug.interceptor.SqlCostInterceptor"/>
+<!--
+    <plugin interceptor="org.apache.ibatis.debug.interceptor.MyHelloInterceptor"/>
+-->
+  </plugins>
+
+  <environments default="development">
+    <environment id="development">
+      <!--使用JDBC事务管理，目前由Mybatis管理-->
+      <transactionManager type="JDBC"/>
+      <!--数据库连接池信息-->
+      <dataSource type="POOLED">
+        <property name="driver" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://192.168.1.151:5432/postgres"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="12345678qq"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <mappers>
+    <!--根据xml-->
+    <!--<mapper resource="org/mybatis/example/BlogMapper.xml"/>-->
+    <!--根据类-->
+    <!-- <mapper class=""/>-->
+    <!--<mapper url=""/>-->
+    <!--根据包扫描-->
+    <package name="org.apache.ibatis.debug.mapper"/>
+  </mappers>
+</configuration>
