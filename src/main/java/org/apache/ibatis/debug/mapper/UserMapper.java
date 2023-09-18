@@ -4,6 +4,7 @@ package org.apache.ibatis.debug.mapper;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.debug.entity.UserAccountInfo;
 import org.apache.ibatis.debug.entity.UserInfo;
+import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
@@ -21,6 +22,10 @@ public interface UserMapper {
    * @param id
    * @return
    */
+  @Results(
+    value = {@Result(column = "id", property = "id", jdbcType = JdbcType.BIGINT),
+      @Result(column = "user_name", property = "userName", jdbcType = JdbcType.VARCHAR)}
+  )
   @Options
   @Select("SELECT * from user_info where id = #{id}")
   UserInfo selectUserById(@Param("id") Long id);

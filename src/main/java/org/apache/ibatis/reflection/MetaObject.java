@@ -54,6 +54,7 @@ public class MetaObject {
     } else if (object instanceof Collection) {
       this.objectWrapper = new CollectionWrapper(this, (Collection) object);
     } else {
+      // 最终默认创建 BeanWrapper对象
       this.objectWrapper = new BeanWrapper(this, object);
     }
   }

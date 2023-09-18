@@ -3,6 +3,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apache.ibatis.debug.mapper.UserMappers">
 
+  <resultMap id="BaseResultMap" type="org.apache.ibatis.debug.entity.UserInfo">
+    <result property="id" jdbcType="BIGINT" column="id" javaType="java.lang.Long" typeHandler=""></result>
+  </resultMap>
 
   <select id="selectUserById" resultType="org.apache.ibatis.debug.entity.UserInfo">
     SELECT
