@@ -342,6 +342,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
       ResultMap discriminatedResultMap = resolveDiscriminatedResultMap(resultSet, resultMap, null);
       // 获取结果
       Object rowValue = getRowValue(rsw, discriminatedResultMap, null);
+      // 多个结果集 采用循环的方式，通过监听ResultHandler的handleResult方法 对单个resultMap进行结果处理
       storeObject(resultHandler, resultContext, rowValue, parentMapping, resultSet);
     }
   }
@@ -547,7 +548,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
     return autoMapping;
   }
-
+  // createAutomaticMappings:将结果集中的字段映射为<K,V>键值对，相当于属性映射关系；而mapping.typeHandler.getResult()方法就是通过 rs.getColumn() 结果结果
   private boolean applyAutomaticMappings(ResultSetWrapper rsw, ResultMap resultMap, MetaObject metaObject, String columnPrefix) throws SQLException {
     List<UnMappedColumnAutoMapping> autoMapping = createAutomaticMappings(rsw, resultMap, metaObject, columnPrefix);
     boolean foundValues = false;
@@ -897,7 +898,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 
   public ResultMap resolveDiscriminatedResultMap(ResultSet rs, ResultMap resultMap, String columnPrefix) throws SQLException {
     Set<String> pastDiscriminators = new HashSet<>();
-    Discriminator discriminator = resultMap.getDiscriminator();
+    Discriminator discriminator = resultMap.getDiscriminator();//鉴别器 默认为空
     while (discriminator != null) {
       final Object value = getDiscriminatorValue(rs, discriminator, columnPrefix);
       final String discriminatedMapId = discriminator.getMapIdFor(String.valueOf(value));

@@ -55,7 +55,7 @@ public class BeanWrapper extends BaseWrapper {
       Object collection = resolveCollection(prop, object);
       setCollectionValue(prop, collection, value);
     } else {
-      setBeanProperty(prop, object, value);
+      setBeanProperty(prop, object, value);// 为结果集对象设置Value值
     }
   }
 
@@ -176,7 +176,7 @@ public class BeanWrapper extends BaseWrapper {
       Invoker method = metaClass.getSetInvoker(prop.getName());
       Object[] params = { value };
       try {
-        // --反射调用给创建的实体设置属性
+        // --反射调用给创建的实体设置属性 ；若prop为id,则方法method为 setId(), 然后再通过 Method.invoke方法调用为属性设置参数.
         method.invoke(object, params);
       } catch (Throwable t) {
         throw ExceptionUtil.unwrapThrowable(t);

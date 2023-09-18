@@ -262,7 +262,7 @@ public class TestMain {
   private static void queryAllUserSessionInfoBySelectProvider(SqlSessionFactory sessionFactory) {
     SqlSession sqlSession = sessionFactory.openSession();
     SessionMapper sessionMapper = sqlSession.getMapper(SessionMapper.class);
-    List<SessionInfo> sessionInfoList = sessionMapper.selectAll("嫦娥");
+    List<SessionInfo> sessionInfoList = sessionMapper.selectAll(null);
     System.out.println(JSONObject.toJSONString(sessionInfoList));
     // 提交事务
     sqlSession.commit();
